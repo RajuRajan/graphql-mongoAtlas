@@ -6,13 +6,15 @@ module.exports = (req, res, next) => {
         req.isAuth = false;
         return next();
     }
-    const token = authHeader.split(' ')[1]; //Bearer dhsakh
+    const token = authHeader; 
     if(!token || token ==='') {
         req.isAuth = false;
         return next()
     }
     try{
+        
     var decodedToken = jwt.verify(token, 'secret')
+    
     } catch (err) {
         req.isAuth = false;
         return next()
@@ -21,6 +23,7 @@ module.exports = (req, res, next) => {
         req.isAuth = false
         return next()
     }
+    
     req.isAuth = true;
     req.userId = decodedToken.userId;
     next()

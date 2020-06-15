@@ -5,9 +5,6 @@ const jwt = require("jsonwebtoken")
 module.exports = {
     createUser: async (args) =>{
         try{
-            if(req.isAuth){
-                return
-            }
             const isUserExists = await User.findOne({email:args.userInput.email})
                 if(isUserExists){
                 throw new Error('User exists already');
@@ -15,7 +12,17 @@ module.exports = {
                 const hashedPass = await bcrypt.hash(args.userInput.password ,12);
                     const user = new User({
                         email: args.userInput.email,
-                        password: hashedPass
+                        password: hashedPass,
+                        firstName: args.userInput.firstName,
+                        lastName: args.userInput.lastName,
+                        phoneNo: args.userInput.phoneNo,
+                        telephoneNo: args.userInput.telephoneNo,
+                        email: args.userInput.email,
+                        roleId: args.userInput.roleId,
+                        countryId: args.userInput.countryId,
+                        cityId: args.userInput.cityId,
+                        designationId: args.userInput.designationId,
+                        dob: args.userInput.dob
                     })
                 const result = await user.save();
             return {...result._doc , password: null}
@@ -25,7 +32,7 @@ module.exports = {
     },
     users: async () => {
         try{
-            const res = await User.find().populate('createdEvents')
+            const res = await User.find()
             return [...res]
         } catch (err) {
             throw err;
@@ -45,7 +52,6 @@ module.exports = {
                 expiresIn: "1h"
             })
             return {userId: user.id, token, tokenExpiration: 1}
-
         } catch (err){
             throw err;
         }

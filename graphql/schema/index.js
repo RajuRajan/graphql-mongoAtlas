@@ -1,20 +1,45 @@
 const { buildSchema } = require('graphql')
 
 module.exports = buildSchema(`
-        type Event {
-            _id: ID!
-            title: String!
-            description: String!
-            price: Float!
-            date: String!
-            creator: User!
+        type Roles {
+            id: ID!
+            name: String!
+            description: String!     
+        }
+        
+        type RoleAccessMap {
+            id: ID!
+            name: String!
+            roleId: Roles!
+            access: Boolean!
         }
 
         type User {
             _id: ID!
+            firstName: String!
+            lastName: String!
+            phoneNo: Int!
+            telephoneNo: Int!
             email: String!
+            roleId: RoleAccessMap!
+            countryId: Int!
+            cityId: Int!
+            designationId: Int!
+            dob: Int!
             password: String
-            createdEvents: [Event!]!
+        }
+
+        type Designation {
+            id: ID!
+            name: String!
+            description: String!
+        }
+
+        type ResetPassword {
+            id: ID!
+            secretKey: Int!
+            userId: String!
+            expiresAt: String!
         }
 
         type AuthData {
@@ -23,38 +48,36 @@ module.exports = buildSchema(`
             tokenExpiration: Int!
         }
 
-        type Booking{
-            _id: ID!
-            event: Event!
-            user: User!
-            createdAt: String!
-            updatedAt: String!
-        }
-
-        input EventInput {
-            title: String! 
-            description: String!
-            price:Float!
-            date: String!
+        type ResetPassRes {
+            isMatched: Boolean!
+            status: String!
+            isPasswordChanged: Boolean!
         }
 
         input UserInput {
+            firstName: String!
+            lastName: String!
+            phoneNo: Int!
+            telephoneNo: Int!
             email: String!
-            password: String!
+            roleId: Int!
+            countryId: Int!
+            cityId: Int!
+            designationId: Int!
+            dob: Int!
+            password: String
         }
 
         type RootQuery {
-            events: [Event!]!
             users: [User!]!
-            bookings: [Booking!]!
             login(email: String!, password: String!): AuthData!
+            forgotPassword(email: String!): ResetPassRes 
         }
 
         type RootMutation {
-            createEvent(eventInput: EventInput): Event
             createUser(userInput: UserInput): User 
-            bookEvent(eventId: ID!): Booking!
-            cancelBooking(bookingId: ID!): Event!
+            checkSecretKey(secretKey: Int!): ResetPassRes
+            resetPassword(secretKey: Int!, password: String!): ResetPassRes
         }
         schema {
             query: RootQuery

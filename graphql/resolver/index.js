@@ -1,11 +1,7 @@
-
-
-const EventResolver = require("./event.resolver")
 const UserResolver = require("./user.resolver")
-const Bookingresolver = require("./booking.resolver")
+const ResetPasswordResolver = require("./resetPassword.resolver")
 
 module.exports = {
-    ...EventResolver,
     ...UserResolver,
-    ...Bookingresolver
+    ...ResetPasswordResolver
 }
