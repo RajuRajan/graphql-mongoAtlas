@@ -52,7 +52,7 @@ module.exports = {
                 }
             }
             catch {
-                return {status:"NOT MATCHED", isMatched:false, code:200}
+                return {status:"TIMEOUT", isMatched:false, code:200}
             }
         } catch (err) {
             throw new Error(err.message)
@@ -76,7 +76,7 @@ module.exports = {
                     return {status:"PASSWORD CHANGED", isMatched: true, isPasswordChanged: true,code:200}
                 }
              } catch {
-                 return {status:"PASSWORD NOT CHANGED", isMatched: false, isPasswordChanged: false, code:200}
+                 return {status:"TIMEOUT", isMatched: false, isPasswordChanged: false, code:200}
              }
         } catch (err) {
             throw new Error(err.message)

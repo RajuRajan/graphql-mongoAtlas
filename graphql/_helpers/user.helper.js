@@ -1,5 +1,7 @@
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
+const Auth = require("../../models/Auth");
+const user = require("../../models/user");
 
  class UserHelper {
     static sendMail(email , randomKey){
@@ -41,6 +43,23 @@ const { google } = require("googleapis");
         smtpTransport.close();
         });
 
+    }
+
+    static async setAuth(userId, accessToken, refreshToken){
+        try{
+            const isAuthExists = await Auth.findOne({userId})
+            if(isAuthExists){
+              const deleteAuth = await  Auth.deleteOne({userId})
+            }
+            const Authres = new Auth({
+                userId,
+                accessToken,
+                refreshToken
+            })
+            Authres.save()
+         } catch (err) {
+             throw new Error(err.message)
+         }
     }
  }
  module.exports = UserHelper

@@ -42,9 +42,11 @@ module.exports = buildSchema(`
         }
 
         type AuthData {
-            userId: ID!
-            token: String!
-            tokenExpiration: Int!
+            userId: ID
+            token: String
+            refreshToken: String
+            message: String
+            code: Int
         }
 
         type ResetPassRes {
@@ -78,6 +80,7 @@ module.exports = buildSchema(`
             createUser(userInput: UserInput): User 
             checkSecretKey(secretKey: Int!): ResetPassRes
             resetPassword(secretKey: Int!, password: String!): ResetPassRes
+            getAccessToken: AuthData
         }
         schema {
             query: RootQuery
