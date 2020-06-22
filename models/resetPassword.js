@@ -4,17 +4,12 @@ const Schema = mongoose.Schema;
 
 const resetSchema = new Schema({
     secretKey: {
-        type: Number,
+        type: String,
         required: true
     },
     userId: {
         type: String,
         required: true
-    },
-    expiresAt: {
-        type: String,
-        required: true
     }
-
-})
+},{timestamps: true })
 module.exports = mongoose.model('ResetPassword',resetSchema)

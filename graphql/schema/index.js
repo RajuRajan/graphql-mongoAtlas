@@ -26,7 +26,7 @@ module.exports = buildSchema(`
             cityId: Int!
             designationId: Int!
             dob: Int!
-            password: String
+            password: String!
         }
 
         type Designation {
@@ -37,9 +37,8 @@ module.exports = buildSchema(`
 
         type ResetPassword {
             id: ID!
-            secretKey: Int!
+            secretKey: String!
             userId: String!
-            expiresAt: String!
         }
 
         type AuthData {
@@ -52,6 +51,7 @@ module.exports = buildSchema(`
             isMatched: Boolean!
             status: String!
             isPasswordChanged: Boolean!
+            code: Int!
         }
 
         input UserInput {
