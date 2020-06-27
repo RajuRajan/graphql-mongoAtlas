@@ -34,7 +34,7 @@ app.use('/graphql',graphqlHttp({
 }))
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-hy1sp.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(
-    app.listen(server_port,()=>console.log("Server Listening =============>"+server_port))
+    app.listen(server_port,()=>console.log("Server Listening ==============>"+server_port))
 )
 .catch (err => console.log(err))
  
